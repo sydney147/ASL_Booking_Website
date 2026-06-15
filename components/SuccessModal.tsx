@@ -18,7 +18,7 @@ export default function SuccessModal({ open, bookingId, email, onClose }: Props)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-      <div className="bg-brand-white rounded-2xl shadow-xl max-w-md w-full p-6 border border-brand-light">
+      <div className="bg-brand-white rounded-2xl shadow-xl max-w-md w-full p-4 sm:p-6 border border-brand-light">
         <div className="text-center">
           <div className="mx-auto w-14 h-14 rounded-full bg-green-100 text-green-600
                           flex items-center justify-center text-3xl mb-3">
