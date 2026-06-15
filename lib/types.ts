@@ -68,7 +68,7 @@ export const DEFAULT_UNITS: Unit[] = [
     description: 'Tower 5, Floor 26, Room 2621 — A warmly furnished studio with a full-size bed dressed in classic blue floral bedding, a sofa with vibrant accent pillows, and a compact fully equipped kitchen with wooden cabinetry. Natural light fills the space through large windows, with open city and greenery views from the 26th floor. Comes with a wall-mounted Smart TV, aircon, fridge, and all the essentials for a relaxing stay — great for small families or groups of up to 4 guests.',
     address: 'Avida Towers Riala, Geonzon St., I.T. Park, Lahug, Cebu City',
     location: 'Tower 5, Floor 26, Room 2621',
-    imageUrl: '/IMG_1300.jpg',
+    imageUrl: '/IMG_1300.JPG',
     standardRate: 1600,
     cleaningFee: 500,
     maxGuests: 4,
