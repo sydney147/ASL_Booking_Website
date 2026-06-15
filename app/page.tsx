@@ -74,13 +74,13 @@ export default async function HomePage() {
           </div>
 
           {/* Property grid — full-width 2-col */}
-          <div className="grid gap-8 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
             {units.map((unit) => (
-              <Link href={`/units/${unit.id}`} key={unit.id} className="group block">
-                <article className="rounded-2xl bg-brand-white border border-brand-light
+              <Link href={`/units/${unit.id}`} key={unit.id} className="group block w-full min-w-0">
+                <article className="w-full rounded-2xl bg-brand-white border border-brand-light
                                     overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
                   {/* Image area */}
-                  <div className="relative h-72 bg-brand-light/60">
+                  <div className="relative h-56 sm:h-72 bg-brand-light/60">
                     {unit.imageUrl && (
                       <Image
                         src={unit.imageUrl}
@@ -105,22 +105,22 @@ export default async function HomePage() {
                     </button>
                   </div>
 
-                  <div className="p-6">
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <h2 className="font-bold text-gray-900 text-lg leading-snug group-hover:text-brand-primary transition-colors">
+                  <div className="p-4 sm:p-6">
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <h2 className="font-bold text-gray-900 text-base sm:text-lg leading-snug group-hover:text-brand-primary transition-colors min-w-0">
                         {unit.name}
                       </h2>
                       <div className="text-right flex-shrink-0">
-                        <span className="text-brand-primary font-bold text-lg">{formatPHP(unit.standardRate)}</span>
+                        <span className="text-brand-primary font-bold text-base sm:text-lg">{formatPHP(unit.standardRate)}</span>
                         <span className="block text-xs font-normal text-gray-400">/night</span>
                       </div>
                     </div>
 
-                    <p className="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2">
+                    <p className="text-sm text-gray-500 leading-relaxed mb-3 line-clamp-2">
                       {unit.description}
                     </p>
 
-                    <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-5">
+                    <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
                       <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                           d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -129,15 +129,15 @@ export default async function HomePage() {
                     </div>
 
                     {/* Features */}
-                    <div className="flex flex-wrap gap-1.5 pt-4 border-t border-brand-light">
+                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-brand-light">
                       {(UNIT_FEATURES[unit.id]?.room ?? []).slice(0, 4).map((f) => (
                         <div key={f.label}
-                          className="flex items-center gap-1.5 bg-brand-bg border border-brand-light
-                                     rounded-full px-3 py-1 text-xs text-gray-600">
+                          className="flex items-center gap-1 bg-brand-bg border border-brand-light
+                                     rounded-full px-2.5 py-1 text-xs text-gray-600 min-w-0 max-w-full">
                           <svg className="w-3 h-3 text-brand-secondary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={FEATURE_ICONS[f.icon]} />
                           </svg>
-                          {f.label}
+                          <span className="truncate">{f.label}</span>
                         </div>
                       ))}
                     </div>
