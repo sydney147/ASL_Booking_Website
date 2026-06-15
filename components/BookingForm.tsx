@@ -558,7 +558,7 @@ function SummaryRow({ label, children }: { label: string; children: ReactNode })
   return (
     <div className="flex justify-between gap-3 items-start">
       <span className="text-gray-500">{label}</span>
-      <span className="font-medium text-gray-800 text-right whitespace-nowrap">{children}</span>
+      <span className="font-medium text-gray-800 text-right min-w-0 break-words">{children}</span>
     </div>
   );
 }

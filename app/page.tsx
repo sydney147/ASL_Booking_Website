@@ -62,7 +62,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Explore ──────────────────────────────────────────── */}
-      <section id="listings" className="bg-brand-bg border-t border-brand-light">
+      <section id="listings" className="bg-brand-bg border-t border-brand-light overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-8 py-12">
 
           {/* Section heading */}

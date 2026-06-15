@@ -14,6 +14,7 @@
 html, body {
   background: #fefefe;
   color: #1f1f1f;
+  overflow-x: hidden;
 }
 
 @layer components {
