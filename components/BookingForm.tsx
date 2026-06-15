@@ -226,7 +226,7 @@ export default function BookingForm({ unit }: Props) {
 
   // ── render ──────────────────────────────────────────────────────
   return (
-    <div className="grid lg:grid-cols-3 gap-6">
+    <div className="grid lg:grid-cols-3 gap-4 lg:gap-6">
 
       {/* ── LEFT COLUMN ─────────────────────────────────────────── */}
       <div className="lg:col-span-2 space-y-5">

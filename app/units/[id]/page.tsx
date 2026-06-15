@@ -71,7 +71,7 @@ export default async function UnitBookingPage({ params }: { params: { id: string
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-5 py-7">
+      <div className="max-w-4xl mx-auto px-4 sm:px-5 py-5 sm:py-7">
 
         {/* Price */}
         <div className="flex items-baseline gap-1.5 mb-5">
