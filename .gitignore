@@ -1,0 +1,23 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+
+.env
+.env.local
+.env*.local
+
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+# Firebase
+.firebase/
+*-debug.log
+firebase-debug.log
+serviceAccountKey*.json
+
+# Pre-compression originals (kept locally for reversal, never committed)
+public/_originals_backup/
