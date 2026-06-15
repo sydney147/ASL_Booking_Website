@@ -1,10 +1,15 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Link from 'next/link';
 import './globals.css';
 
 export const metadata: Metadata = {
   title: 'ASL Cozy Living Booking Site',
   description: 'Find homes, villas and escapes that match your lifestyle.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -18,11 +23,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="font-sans min-h-screen flex flex-col bg-brand-white">
         <header className="sticky top-0 z-30 bg-brand-white/95 backdrop-blur border-b border-brand-light">
-          <div className="w-full px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between">
-            <Link href="/" className="font-display text-lg sm:text-2xl text-brand-primary tracking-tight">
+          <div className="w-full px-3 sm:px-8 py-3 sm:py-4 flex items-center justify-between gap-2">
+            <Link href="/" className="font-display text-base sm:text-2xl text-brand-primary tracking-tight whitespace-nowrap">
               ASL Cozy Living
             </Link>
-            <nav className="flex items-center gap-4 sm:gap-7 text-sm font-medium text-gray-400">
+            <nav className="flex items-center gap-3 sm:gap-7 text-xs sm:text-sm font-medium text-gray-400 whitespace-nowrap">
               <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
               <Link href="/my-booking" className="hover:text-brand-primary transition-colors">Find Booking</Link>
               <Link href="/admin" className="hover:text-brand-primary transition-colors">Admin</Link>

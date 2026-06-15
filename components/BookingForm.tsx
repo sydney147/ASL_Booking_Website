@@ -249,7 +249,7 @@ export default function BookingForm({ unit }: Props) {
                 type="tel"
                 inputMode="numeric"
                 className="field"
-                placeholder="0945 392 1991"
+                placeholder="0000 000 0000"
                 maxLength={13}
                 value={info.phone}
                 onChange={e => setInfo({ ...info, phone: formatPhone(e.target.value) })}

@@ -83,17 +83,17 @@ export default function PaymentModal({ open, totalAmount, onCancel, onSubmit }: 
   const selectedBank = BANK_OPTIONS.find((b) => b.id === bankOption);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 overflow-y-auto py-8">
-      <div className="bg-brand-white rounded-2xl shadow-xl max-w-xl w-full p-6 border border-brand-light">
-        <h3 className="font-display text-2xl text-brand-primary mb-1">Complete Your Booking</h3>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-3 sm:px-4 overflow-y-auto py-8">
+      <div className="bg-brand-white rounded-2xl shadow-xl max-w-xl w-full p-4 sm:p-6 border border-brand-light">
+        <h3 className="font-display text-xl sm:text-2xl text-brand-primary mb-1">Complete Your Booking</h3>
         <p className="text-sm text-gray-600 mb-4">
           Send <strong>{formatPHP(totalAmount)}</strong> using one of the methods below, then
           upload your screenshot.
         </p>
 
-        <div className="flex gap-3 mb-4">
-          {/* Left: method + bank selectors */}
-          <div className="flex flex-col gap-2 w-36 flex-shrink-0">
+        <div className="flex flex-col sm:flex-row gap-3 mb-4">
+          {/* Method + bank selectors — full width on mobile, fixed left column on sm+ */}
+          <div className="flex flex-col gap-2 w-full sm:w-36 sm:flex-shrink-0">
             <button
               type="button"
               onClick={() => { setMethod('gcash'); setBankOption(null); }}
@@ -144,7 +144,7 @@ export default function PaymentModal({ open, totalAmount, onCancel, onSubmit }: 
                 <button
                   type="button"
                   onClick={() => setPreviewSrc('/QRs/Gcash_QR.jpg')}
-                  className="relative w-56 h-56 cursor-zoom-in rounded-lg overflow-hidden hover:opacity-90 transition-opacity"
+                  className="relative w-48 h-48 sm:w-56 sm:h-56 cursor-zoom-in rounded-lg overflow-hidden hover:opacity-90 transition-opacity"
                   title="Click to enlarge"
                 >
                   <Image
@@ -172,7 +172,7 @@ export default function PaymentModal({ open, totalAmount, onCancel, onSubmit }: 
                 <button
                   type="button"
                   onClick={() => setPreviewSrc(selectedBank.qr)}
-                  className="relative w-56 h-56 cursor-zoom-in rounded-lg overflow-hidden hover:opacity-90 transition-opacity"
+                  className="relative w-48 h-48 sm:w-56 sm:h-56 cursor-zoom-in rounded-lg overflow-hidden hover:opacity-90 transition-opacity"
                   title="Click to enlarge"
                 >
                   <Image
