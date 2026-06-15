@@ -26,6 +26,10 @@ export async function POST(req: NextRequest) {
   if (!body.customer?.name || !body.customer?.email || !body.customer?.phone)
     return badRequest('Customer name, email, and phone are required.');
   if (!/^\S+@\S+\.\S+$/.test(body.customer.email)) return badRequest('Invalid email.');
+  const phoneDigits = body.customer.phone.replace(/\D/g, '');
+  if (phoneDigits.length !== 11 || !phoneDigits.startsWith('09')) {
+    return badRequest('Phone must be a valid Philippine mobile number (e.g. 0945 392 1991).');
+  }
   if (!body.checkIn || !body.checkOut) return badRequest('Dates are required.');
   if (new Date(body.checkOut) <= new Date(body.checkIn))
     return badRequest('Check-out must be after check-in.');

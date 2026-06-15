@@ -32,6 +32,18 @@ function displayDate(d: string) {
   return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+// ── phone helpers (Philippine mobile: 11 digits, format XXXX XXX XXXX) ──
+function formatPhone(input: string): string {
+  const digits = input.replace(/\D/g, '').slice(0, 11);
+  if (digits.length <= 4) return digits;
+  if (digits.length <= 7) return `${digits.slice(0, 4)} ${digits.slice(4)}`;
+  return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`;
+}
+function isValidPHMobile(formatted: string): boolean {
+  const digits = formatted.replace(/\D/g, '');
+  return digits.length === 11 && digits.startsWith('09');
+}
+
 // ── fee helpers ───────────────────────────────────────────────────
 function guestFeeBreakdown(g: Guests, nights: number) {
   const extraAdults   = Math.max(0, g.adults - 2);
@@ -115,6 +127,7 @@ export default function BookingForm({ unit }: Props) {
     if (!info.name.trim())                       e.push('Full name is required.');
     if (!/^\S+@\S+\.\S+$/.test(info.email))      e.push('Valid email is required.');
     if (!info.phone.trim())                      e.push('Contact number is required.');
+    else if (!isValidPHMobile(info.phone))       e.push('Phone must be an 11-digit number starting with 09 (e.g. 0945 392 1991).');
     if (stayNights < 1)                          e.push('Check-out must be after check-in.');
     if (rangeOverlapsBlocked(checkIn, checkOut)) e.push('Selected dates overlap with an existing booking.');
     if (totalGuests > MAX_GUESTS)                e.push(`Maximum ${MAX_GUESTS} guests allowed.`);
@@ -233,9 +246,13 @@ export default function BookingForm({ unit }: Props) {
             <div>
               <label className="label">Contact Number <Ast /></label>
               <input
-                type="tel" className="field" placeholder="Your phone number"
+                type="tel"
+                inputMode="numeric"
+                className="field"
+                placeholder="0945 392 1991"
+                maxLength={13}
                 value={info.phone}
-                onChange={e => setInfo({ ...info, phone: e.target.value })}
+                onChange={e => setInfo({ ...info, phone: formatPhone(e.target.value) })}
               />
             </div>
             <div className="sm:col-span-2">

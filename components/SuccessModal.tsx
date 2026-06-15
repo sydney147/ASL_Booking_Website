@@ -31,6 +31,14 @@ export default function SuccessModal({ open, bookingId, email, onClose }: Props)
           <p className="text-xs text-gray-500 mb-4">
             Save this ID. We&apos;ll also email it to you, along with a link to track your booking.
           </p>
+          <div className="text-left rounded-xl bg-amber-50 border border-amber-100 p-3 mb-4">
+            <p className="text-xs text-amber-800 font-semibold mb-1">📬 Don&apos;t see our email?</p>
+            <p className="text-[11px] text-amber-700/90 leading-relaxed">
+              Check your <strong>spam</strong> or <strong>promotions</strong> folder. If you find it
+              there, please mark it as <strong>Not Spam</strong> so future updates land in your inbox.
+              You can also add <span className="font-mono">aslcozyliving@gmail.com</span> to your contacts.
+            </p>
+          </div>
         </div>
         <div className="flex flex-col gap-2 mt-4">
           <Link href={viewHref} className="btn-primary w-full justify-center">

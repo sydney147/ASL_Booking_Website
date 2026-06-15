@@ -39,12 +39,20 @@ function magicLink(bookingId: string, email: string): string {
 function layout(opts: {
   heading: string;
   intro: string;
+  preview: string;        // shows in inbox preview (Gmail/Outlook snippet)
   bodyHTML: string;
   bookingId: string;
   email: string;
 }): string {
   const link = magicLink(opts.bookingId, opts.email);
+  // Invisible preheader for inbox preview text.
+  const preheader = `
+    <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; visibility:hidden; opacity:0; color:transparent; height:0; width:0;">
+      ${opts.preview}
+    </div>
+  `;
   return `
+    ${preheader}
     <div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; color: #1f1f1f;">
       <div style="background: ${BRAND_COLOR}; color: white; padding: 18px 24px; border-radius: 12px 12px 0 0;">
         <h1 style="margin: 0; font-size: 18px; letter-spacing: 0.5px;">${BRAND_NAME}</h1>
@@ -68,6 +76,50 @@ function layout(opts: {
       </div>
     </div>
   `;
+}
+
+function detailsText(args: BaseArgs): string {
+  const lines: string[] = [
+    `Unit:       ${args.unitName}`,
+  ];
+  if (args.unitLocation) lines.push(`Location:   ${args.unitLocation}`);
+  if (args.unitAddress)  lines.push(`Address:    ${args.unitAddress}`);
+  lines.push(`Check-in:   ${args.checkIn} · 2:00 PM`);
+  lines.push(`Check-out:  ${args.checkOut} · 12:00 Noon`);
+  lines.push(`Total:      ${formatPHP(args.totalAmount)}`);
+  return lines.join('\n');
+}
+
+function paymentText(args: ReceivedArgs): string {
+  if (args.paymentOption === 'full') {
+    return `Paid in full: ${formatPHP(args.totalAmount)}`;
+  }
+  return [
+    `Reservation fee paid:        ${formatPHP(args.reservationFee)}`,
+    `Balance due on check-in:     ${formatPHP(args.balanceDue)} (${args.checkIn})`,
+  ].join('\n');
+}
+
+function buildText(opts: {
+  greeting: string;
+  body: string;
+  bookingId: string;
+  email: string;
+}): string {
+  const link = magicLink(opts.bookingId, opts.email);
+  return [
+    opts.greeting,
+    '',
+    opts.body,
+    '',
+    `View your booking: ${link}`,
+    '',
+    `Booking ID: ${opts.bookingId}`,
+    `Or visit ${siteUrl()}/my-booking and enter the ID with this email.`,
+    '',
+    `Thanks,`,
+    BRAND_NAME,
+  ].join('\n');
 }
 
 function detailsTable(args: BaseArgs): string {
@@ -118,6 +170,7 @@ function paymentBlock(args: ReceivedArgs): string {
 // ── Public senders ────────────────────────────────────────────────
 
 export async function sendBookingReceived(args: ReceivedArgs): Promise<void> {
+  const preview = `Booking ${args.bookingId} — ${args.unitName} · ${args.checkIn} to ${args.checkOut}`;
   return send({
     to: args.to,
     subject: `Booking received — ${args.unitName}`,
@@ -126,12 +179,27 @@ export async function sendBookingReceived(args: ReceivedArgs): Promise<void> {
       email: args.to,
       heading: 'We got your booking!',
       intro: `Hi ${args.name}, we received your booking request and your payment proof. We&rsquo;ll verify the payment and confirm shortly — usually within 24 hours.`,
+      preview,
       bodyHTML: detailsTable(args) + paymentBlock(args),
+    }),
+    text: buildText({
+      greeting: `Hi ${args.name},`,
+      body: [
+        'We received your booking request and your payment proof.',
+        'We will verify the payment and confirm shortly — usually within 24 hours.',
+        '',
+        detailsText(args),
+        '',
+        paymentText(args),
+      ].join('\n'),
+      bookingId: args.bookingId,
+      email: args.to,
     }),
   });
 }
 
 export async function sendBookingConfirmed(args: ConfirmedArgs): Promise<void> {
+  const preview = `Confirmed — ${args.unitName} · ${args.checkIn} to ${args.checkOut}`;
   return send({
     to: args.to,
     subject: `Booking confirmed — ${args.unitName}`,
@@ -140,12 +208,26 @@ export async function sendBookingConfirmed(args: ConfirmedArgs): Promise<void> {
       email: args.to,
       heading: 'Your booking is confirmed!',
       intro: `Hi ${args.name}, we&rsquo;ve verified your payment. Your stay at ${args.unitName} is locked in. We can&rsquo;t wait to host you!`,
+      preview,
       bodyHTML: detailsTable(args) + paymentBlock(args),
+    }),
+    text: buildText({
+      greeting: `Hi ${args.name},`,
+      body: [
+        `We have verified your payment. Your stay at ${args.unitName} is locked in.`,
+        '',
+        detailsText(args),
+        '',
+        paymentText(args),
+      ].join('\n'),
+      bookingId: args.bookingId,
+      email: args.to,
     }),
   });
 }
 
 export async function sendBookingCancelled(args: BaseArgs): Promise<void> {
+  const preview = `Cancelled — ${args.unitName} · ${args.checkIn} to ${args.checkOut}`;
   return send({
     to: args.to,
     subject: `Booking cancelled — ${args.unitName}`,
@@ -154,12 +236,25 @@ export async function sendBookingCancelled(args: BaseArgs): Promise<void> {
       email: args.to,
       heading: 'Your booking has been cancelled',
       intro: `Hi ${args.name}, your booking for ${args.unitName} (${args.checkIn} → ${args.checkOut}) has been cancelled. If this was unexpected, please contact us right away.`,
+      preview,
       bodyHTML: detailsTable(args),
+    }),
+    text: buildText({
+      greeting: `Hi ${args.name},`,
+      body: [
+        `Your booking has been cancelled.`,
+        `If this was unexpected, please reply to this email so we can help.`,
+        '',
+        detailsText(args),
+      ].join('\n'),
+      bookingId: args.bookingId,
+      email: args.to,
     }),
   });
 }
 
 export async function sendBookingRefunded(args: BaseArgs): Promise<void> {
+  const preview = `Refund processed — ${args.unitName} · ${args.checkIn} to ${args.checkOut}`;
   return send({
     to: args.to,
     subject: `Refund processed — ${args.unitName}`,
@@ -168,7 +263,19 @@ export async function sendBookingRefunded(args: BaseArgs): Promise<void> {
       email: args.to,
       heading: 'Your refund has been processed',
       intro: `Hi ${args.name}, we&rsquo;ve issued a refund for your booking at ${args.unitName}. Depending on your payment method, the funds should appear within 3–5 business days.`,
+      preview,
       bodyHTML: detailsTable(args),
+    }),
+    text: buildText({
+      greeting: `Hi ${args.name},`,
+      body: [
+        `We have issued a refund for your booking at ${args.unitName}.`,
+        `Depending on your payment method, funds should appear within 3-5 business days.`,
+        '',
+        detailsText(args),
+      ].join('\n'),
+      bookingId: args.bookingId,
+      email: args.to,
     }),
   });
 }
@@ -192,7 +299,7 @@ function getTransporter(): Transporter | null {
   return _transporter;
 }
 
-async function send(args: { to: string; subject: string; html: string }): Promise<void> {
+async function send(args: { to: string; subject: string; html: string; text: string }): Promise<void> {
   const transporter = getTransporter();
   if (!transporter) {
     console.warn('[email] Gmail SMTP not configured — skipping send to', args.to);
@@ -200,15 +307,16 @@ async function send(args: { to: string; subject: string; html: string }): Promis
   }
 
   const fromAddress = process.env.GMAIL_USER!;
-  // Show a friendly "From" name on the customer's side.
   const fromHeader  = `${BRAND_NAME} <${fromAddress}>`;
 
   try {
     const info = await transporter.sendMail({
       from: fromHeader,
       to: args.to,
+      replyTo: fromAddress,
       subject: args.subject,
       html: args.html,
+      text: args.text,
     });
     console.log('[email] sent', args.subject, 'to', args.to, '— id:', info.messageId);
   } catch (err) {
