@@ -53,7 +53,7 @@ export default async function UnitBookingPage({ params }: { params: { id: string
 
         {/* Back button — top left */}
         <a href="/"
-          className="absolute top-4 left-5 inline-flex items-center gap-1.5
+          className="absolute top-4 left-4 sm:left-8 inline-flex items-center gap-1.5
                      bg-black/30 backdrop-blur-sm hover:bg-black/50 transition-colors
                      text-white text-xs font-medium px-3 py-1.5 rounded-full">
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,7 +63,7 @@ export default async function UnitBookingPage({ params }: { params: { id: string
         </a>
 
         {/* Unit name + address — bottom left */}
-        <div className="absolute bottom-4 left-4 sm:bottom-5 sm:left-5 right-4">
+        <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-8 sm:right-8">
           <h1 className="font-display text-2xl sm:text-3xl md:text-4xl text-white leading-tight drop-shadow-md">
             {unit.name}
           </h1>
@@ -71,7 +71,7 @@ export default async function UnitBookingPage({ params }: { params: { id: string
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-5 py-5 sm:py-7">
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 py-5 sm:py-7">
 
         {/* Price */}
         <div className="flex items-baseline gap-1.5 mb-5">

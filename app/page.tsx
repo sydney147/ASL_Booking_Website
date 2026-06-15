@@ -13,7 +13,7 @@ export default async function HomePage() {
     <div>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="bg-brand-white overflow-hidden">
-        <div className="max-w-6xl mx-auto px-5">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8">
           <div className="flex flex-col md:flex-row md:items-stretch gap-0 md:gap-12 md:min-h-[540px]">
 
             {/* Left: text + CTA */}
@@ -63,7 +63,7 @@ export default async function HomePage() {
 
       {/* ── Explore ──────────────────────────────────────────── */}
       <section id="listings" className="bg-brand-bg border-t border-brand-light">
-        <div className="max-w-6xl mx-auto px-5 py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-12">
 
           {/* Section heading */}
           <div className="text-center mb-10">

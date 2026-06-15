@@ -106,11 +106,11 @@ export default function AdminPage() {
 
   // ── Auth guards ──────────────────────────────────────────────────
   if (authLoading) {
-    return <div className="max-w-6xl mx-auto px-4 py-8"><p className="text-gray-500">Checking access…</p></div>;
+    return <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8"><p className="text-gray-500">Checking access…</p></div>;
   }
   if (authError) {
     return (
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8">
         <div className="rounded-lg bg-red-50 text-red-700 text-sm px-3 py-2">{authError}</div>
       </div>
     );
@@ -118,7 +118,7 @@ export default function AdminPage() {
   if (!user) return null;
   if (!isAdmin) {
     return (
-      <div className="max-w-md mx-auto px-4 py-12">
+      <div className="max-w-md mx-auto px-4 sm:px-8 py-12">
         <h1 className="font-display text-3xl text-brand-primary mb-2">Not Authorized</h1>
         <p className="text-sm text-gray-600 mb-4">
           You&apos;re signed in as <span className="font-mono">{user.email}</span>, but this account
@@ -131,7 +131,7 @@ export default function AdminPage() {
 
   // ── Main render ──────────────────────────────────────────────────
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8">
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">

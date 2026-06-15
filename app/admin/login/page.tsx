@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
+    <div className="max-w-md mx-auto px-4 sm:px-8 py-12">
       <h1 className="font-display text-3xl text-brand-primary mb-2">Admin Login</h1>
       <p className="text-sm text-gray-500 mb-6">
         Sign in with your admin account to manage bookings.

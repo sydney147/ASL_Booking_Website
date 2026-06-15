@@ -67,7 +67,7 @@ function MyBookingInner() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
+    <div className="max-w-2xl mx-auto px-4 sm:px-8 py-10">
       <h1 className="font-display text-3xl text-brand-primary mb-2">Find My Booking</h1>
       <p className="text-sm text-gray-500 mb-6">
         Enter your booking ID and the email address you used to book.
@@ -254,7 +254,7 @@ function StatusMessage({ status }: { status: LookupBooking['status'] }) {
 
 export default function MyBookingPage() {
   return (
-    <Suspense fallback={<div className="max-w-2xl mx-auto px-4 py-10 text-gray-400 text-sm">Loading...</div>}>
+    <Suspense fallback={<div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 text-gray-400 text-sm">Loading...</div>}>
       <MyBookingInner />
     </Suspense>
   );
