@@ -66,7 +66,7 @@ export default function BookingForm({ unit }: Props) {
   const [checkOut,    setCheckOut]    = useState(TOMORROW);
   const [calYear,     setCalYear]     = useState(() => new Date().getFullYear());
   const [calMonth,    setCalMonth]    = useState(() => new Date().getMonth());
-  const [pickingDate, setPickingDate] = useState<'checkIn' | 'checkOut' | null>(null);
+  const [pickingDate, setPickingDate] = useState<'checkIn' | 'checkOut'>('checkIn');
 
   // guests
   const [guests, setGuests] = useState<Guests>({ adults: 1, children: 0, infants: 0, pets: 0 });
@@ -160,27 +160,28 @@ export default function BookingForm({ unit }: Props) {
 
     if (pickingDate === 'checkIn') {
       setCheckIn(ds);
-      // If existing checkOut is now invalid (same day or earlier, or range now crosses a blocked date),
-      // bump it forward by one night and prompt for a new checkout.
-      const checkoutInvalid = ds >= checkOut || rangeOverlapsBlocked(ds, checkOut);
-      if (checkoutInvalid) {
+      // If existing checkOut is now invalid (same day or earlier, or range now crosses
+      // a blocked date), bump it forward by one night.
+      if (ds >= checkOut || rangeOverlapsBlocked(ds, checkOut)) {
         setCheckOut(addDays(ds, 1));
-        setPickingDate('checkOut');
-      } else {
-        setPickingDate(null);
       }
-    } else if (pickingDate === 'checkOut') {
+      // Always move on to picking check-out next.
+      setPickingDate('checkOut');
+    } else {
+      // pickingDate === 'checkOut'
       if (ds <= checkIn) {
-        // Picked a date at/before check-in: treat as a new check-in and keep picking checkout.
+        // Picked a date at/before check-in: treat as a new check-in instead.
         setCheckIn(ds);
         setCheckOut(addDays(ds, 1));
         setPickingDate('checkOut');
       } else if (rangeOverlapsBlocked(checkIn, ds)) {
-        // Range now crosses a booked date — clamp to night-after-checkIn.
+        // Range crosses a booked date — clamp to one night after check-in.
         setCheckOut(addDays(checkIn, 1));
+        setPickingDate('checkIn');
       } else {
         setCheckOut(ds);
-        setPickingDate(null);
+        // Done — ready for the user to edit check-in again if they want.
+        setPickingDate('checkIn');
       }
     }
   }
@@ -303,78 +304,68 @@ export default function BookingForm({ unit }: Props) {
             ))}
           </div>
 
-          {/* Calendar popover — only shown while picking a date */}
-          {pickingDate && (
-            <div className="border border-brand-light rounded-xl overflow-hidden mb-3 animate-[fadeIn_120ms_ease-out]">
+          {/* Calendar — always visible */}
+          <div className="border border-brand-light rounded-xl overflow-hidden mb-3">
 
-              {/* Picking instruction + close */}
-              <div className="flex items-center justify-between px-3 py-2 bg-brand-primary/5 border-b border-brand-light">
-                <p className="text-xs font-medium text-brand-primary">
-                  {pickingDate === 'checkIn' ? 'Select your check-in date' : 'Select your check-out date'}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setPickingDate(null)}
-                  className="text-xs text-gray-500 hover:text-brand-primary transition-colors"
-                  aria-label="Close calendar"
-                >
-                  ✕
-                </button>
-              </div>
+            {/* Picking instruction */}
+            <div className="px-3 py-2 bg-brand-primary/5 border-b border-brand-light text-center">
+              <p className="text-xs font-medium text-brand-primary">
+                Tap a date below to set your {pickingDate === 'checkIn' ? 'check-in' : 'check-out'}
+              </p>
+            </div>
 
-              {/* Month nav */}
-              <div className="flex items-center justify-between px-4 py-3 bg-brand-bg border-b border-brand-light">
-                <button type="button" onClick={prevMonth}
+            {/* Month nav */}
+            <div className="flex items-center justify-between px-4 py-3 bg-brand-bg border-b border-brand-light">
+              <button type="button" onClick={prevMonth}
+                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-brand-light transition-colors">
+                <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <span className="text-sm font-semibold text-gray-800">
+                {MONTH_NAMES[calMonth]} {calYear}
+              </span>
+              <div className="flex gap-1">
+                <button type="button" onClick={nextMonth}
                   className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-brand-light transition-colors">
                   <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
-                <span className="text-sm font-semibold text-gray-800">
-                  {MONTH_NAMES[calMonth]} {calYear}
-                </span>
-                <div className="flex gap-1">
-                  <button type="button" onClick={nextMonth}
-                    className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-brand-light transition-colors">
-                    <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                  <button type="button" onClick={goToday} title="Go to today"
-                    className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-brand-light text-sm text-gray-400 transition-colors">
-                    ↺
-                  </button>
-                </div>
+                <button type="button" onClick={goToday} title="Go to today"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-brand-light text-sm text-gray-400 transition-colors">
+                  ↺
+                </button>
               </div>
-
-              {/* Day-of-week headers */}
-              <div className="grid grid-cols-7 text-center border-b border-brand-light">
-                {WEEK_DAYS.map(d => (
-                  <div key={d} className="py-2 text-xs font-medium text-gray-400">{d}</div>
-                ))}
-              </div>
-
-              {/* Day cells */}
-              <div className="grid grid-cols-7 text-center px-1 sm:px-2 py-2 gap-y-0.5">
-                {cells.map((ds, i) => (
-                  <div
-                    key={i}
-                    className={`py-2.5 sm:py-2 text-sm select-none text-center transition-colors ${ds ? dayCls(ds) : ''}`}
-                    onClick={() => ds && handleDayClick(ds)}
-                  >
-                    {ds ? parseInt(ds.slice(8)) : ''}
-                  </div>
-                ))}
-              </div>
-
-              {blockedDates.size > 0 && (
-                <div className="px-3 py-2 border-t border-brand-light flex items-center gap-1.5 text-[10px] text-gray-400">
-                  <span className="w-3 h-3 rounded bg-red-50 border border-red-200 flex-shrink-0" />
-                  Dates crossed out are already booked
-                </div>
-              )}
             </div>
-          )}
+
+            {/* Day-of-week headers */}
+            <div className="grid grid-cols-7 text-center border-b border-brand-light">
+              {WEEK_DAYS.map(d => (
+                <div key={d} className="py-2 text-xs font-medium text-gray-400">{d}</div>
+              ))}
+            </div>
+
+            {/* Day cells */}
+            <div className="grid grid-cols-7 text-center px-1 sm:px-2 py-2 gap-y-0.5">
+              {cells.map((ds, i) => (
+                <div
+                  key={i}
+                  className={`py-2.5 sm:py-2 text-sm select-none text-center transition-colors ${ds ? dayCls(ds) : ''}`}
+                  onClick={() => ds && handleDayClick(ds)}
+                >
+                  {ds ? parseInt(ds.slice(8)) : ''}
+                </div>
+              ))}
+            </div>
+
+            {blockedDates.size > 0 && (
+              <div className="px-3 py-2 border-t border-brand-light flex items-center gap-1.5 text-[10px] text-gray-400">
+                <span className="w-3 h-3 rounded bg-red-50 border border-red-200 flex-shrink-0" />
+                Dates crossed out are already booked
+              </div>
+            )}
+          </div>
 
           {/* Stay summary */}
           <div className="rounded-xl bg-brand-bg border border-brand-light px-4 py-3 text-sm">
