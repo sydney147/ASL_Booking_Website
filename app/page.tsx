@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { fetchUnits } from '@/lib/units';
-import PropertyList from '@/components/PropertyList';
+import PropertyCard from '@/components/PropertyCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -71,8 +71,12 @@ export default async function HomePage() {
             <h2 className="font-sans text-3xl font-black text-gray-900">Our Properties</h2>
           </div>
 
-          {/* Property list — client component with filters + sort */}
-          <PropertyList units={units} />
+          {/* Property grid */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
+            {units.map((unit) => (
+              <PropertyCard key={unit.id} unit={unit} />
+            ))}
+          </div>
         </div>
       </section>
     </div>

@@ -42,21 +42,21 @@ export default function BackgroundDecoration() {
       className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
       aria-hidden="true"
     >
-      {/* ── Blurred pastel blobs (color wash) ────────────────── */}
+      {/* ── Blurred earthy blobs (color wash) ────────────────── */}
       <div
-        className="absolute rounded-full bg-brand-blush opacity-90 blur-3xl"
+        className="absolute rounded-full bg-brand-blush opacity-80 blur-3xl"
         style={{ top: '-8rem', right: '-8rem', width: '32rem', height: '32rem' }}
       />
       <div
-        className="absolute rounded-full bg-brand-light opacity-90 blur-3xl"
+        className="absolute rounded-full bg-brand-light opacity-70 blur-3xl"
         style={{ bottom: '-8rem', left: '-8rem', width: '30rem', height: '30rem' }}
       />
       <div
-        className="absolute rounded-full bg-brand-cream opacity-70 blur-3xl"
+        className="absolute rounded-full bg-brand-cream opacity-80 blur-3xl"
         style={{ top: '40%', right: '15%', width: '20rem', height: '20rem' }}
       />
       <div
-        className="absolute rounded-full bg-brand-secondary/40 blur-3xl"
+        className="absolute rounded-full bg-brand-accent/25 blur-3xl"
         style={{ top: '-6rem', left: '20%', width: '18rem', height: '18rem' }}
       />
       <div
@@ -64,36 +64,36 @@ export default function BackgroundDecoration() {
         style={{ top: '60%', left: '5%', width: '22rem', height: '22rem' }}
       />
 
-      {/* ── Soft-petal flower silhouettes ────────────────────── */}
+      {/* ── Soft-petal flower silhouettes (earthy palette) ───── */}
       <Flower
         className="top-8 -right-16 w-96 h-96"
-        color="#EEBFD3"    // deeper blush
+        color="#C97B63"    // terracotta
         rotation={-20}
-        opacity={0.22}
-      />
-      <Flower
-        className="top-1/3 -left-24 w-[28rem] h-[28rem]"
-        color="#C9B4E5"    // deeper lavender
-        rotation={40}
         opacity={0.18}
       />
       <Flower
+        className="top-1/3 -left-24 w-[28rem] h-[28rem]"
+        color="#D7C7AE"    // sandstone beige
+        rotation={40}
+        opacity={0.28}
+      />
+      <Flower
         className="bottom-0 right-1/4 w-72 h-72"
-        color="#F5CDA0"    // warm peach
+        color="#A85E46"    // deep clay
         rotation={-10}
-        opacity={0.16}
+        opacity={0.14}
       />
       <Flower
         className="-bottom-16 -left-8 w-80 h-80"
-        color="#E8B7CE"    // pink
+        color="#EDDBC7"    // warm beige
         rotation={65}
-        opacity={0.2}
+        opacity={0.35}
       />
       <Flower
         className="top-2/3 right-8 w-64 h-64 hidden sm:block"
-        color="#B99BD9"    // purple
+        color="#5B4A3B"    // dark cocoa
         rotation={20}
-        opacity={0.14}
+        opacity={0.10}
       />
     </div>
   );

@@ -17,23 +17,23 @@
 }
 
 html, body {
-  /* Warmer pink→lavender→peach wash. Blurred flowers layer on top via -z-10 fixed. */
-  background: linear-gradient(135deg, #FBE5EE 0%, #F1E5FB 50%, #FCEDDD 100%);
-  color: #1f1f1f;
+  /* Warm earthy wash — soft ivory → cream → light beige. Blurred flowers layer on top via -z-10 fixed. */
+  background: linear-gradient(135deg, #FAF3E6 0%, #F5EAD5 50%, #EDE3D1 100%);
+  color: #6B6257;
   overflow-x: hidden;
   min-height: 100vh;
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-primary px-6 py-3
-           font-semibold text-white shadow-sm hover:opacity-90 disabled:opacity-40
-           disabled:cursor-not-allowed transition-all text-sm;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-accent px-6 py-3
+           font-semibold text-white shadow-sm hover:bg-brand-accentHover disabled:opacity-40
+           disabled:cursor-not-allowed transition-colors text-sm;
   }
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2 rounded-full border border-brand-light
-           px-6 py-3 font-semibold text-gray-600 hover:border-brand-secondary
-           hover:text-brand-secondary transition-all text-sm;
+           px-6 py-3 font-semibold text-brand-secondary hover:border-brand-accent
+           hover:text-brand-accent transition-colors text-sm;
   }
   .field {
     @apply w-full rounded-xl border border-brand-light bg-brand-bg px-4 py-2.5 text-sm

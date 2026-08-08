@@ -9,13 +9,15 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          primary:   '#41224A',  // deep purple — logo, headings, primary buttons
-          secondary: '#8B6EAA',  // soft lavender — accents, links, secondary text
-          light:     '#E8DEF7',  // pale lavender — borders, dividers, subtle bg
-          bg:        '#FFF8F3',  // warm cream — page background
-          white:     '#FEFCFA',  // faint cream-white — cards
-          cream:     '#FFF0E4',  // deeper cream — accent panels, tags
-          blush:     '#F7E4EE',  // light blush — hover/subtle accent
+          primary:      '#5B4A3B',  // dark cocoa — headings, prices, prominent text
+          secondary:    '#6B6257',  // soft brown — body copy, secondary text
+          light:        '#D7C7AE',  // sandstone beige — borders, dividers
+          bg:           '#FAF3E6',  // soft ivory — page background
+          white:        '#EDE3D1',  // light beige — cards, panels
+          cream:        '#F5EAD5',  // lighter beige — accent panels, subtle bg
+          blush:        '#EDDBC7',  // warm beige — hover backgrounds
+          accent:       '#C97B63',  // terracotta — primary buttons, CTAs
+          accentHover:  '#A85E46',  // deep clay — button hover state
         },
       },
       fontFamily: {
