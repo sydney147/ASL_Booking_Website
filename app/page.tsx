@@ -10,7 +10,7 @@ export default async function HomePage() {
   return (
     <div>
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="bg-brand-white overflow-hidden">
+      <section className="overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-8">
           <div className="flex flex-col md:flex-row md:items-stretch gap-0 md:gap-12 md:min-h-[540px]">
 
@@ -60,7 +60,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Explore ──────────────────────────────────────────── */}
-      <section id="listings" className="bg-brand-bg border-t border-brand-light overflow-hidden">
+      <section id="listings" className="border-t border-brand-light/60 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-8 py-12">
 
           {/* Section heading */}

@@ -17,9 +17,11 @@
 }
 
 html, body {
-  background: #FFF8F3;
+  /* Very soft pink → lavender wash. Sits behind the blurred flower decoration. */
+  background: linear-gradient(135deg, #FDF5F8 0%, #F7F0FA 100%);
   color: #1f1f1f;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 @layer components {

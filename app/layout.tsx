@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import Link from 'next/link';
+import BackgroundDecoration from '@/components/BackgroundDecoration';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,8 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="font-sans min-h-screen flex flex-col bg-brand-white">
-        <header className="sticky top-0 z-30 bg-brand-white/95 backdrop-blur border-b border-brand-light">
+      <body className="font-sans min-h-screen flex flex-col">
+        <BackgroundDecoration />
+        <header className="sticky top-0 z-30 bg-brand-white/80 backdrop-blur-md border-b border-brand-light/60">
           <div className="w-full px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between gap-2">
             <Link href="/" className="font-display text-base sm:text-2xl text-brand-primary tracking-tight whitespace-nowrap">
               ASL Cozy Living
