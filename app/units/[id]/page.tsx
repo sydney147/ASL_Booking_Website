@@ -174,7 +174,7 @@ export default async function UnitBookingPage({ params }: { params: { id: string
             <div className="rounded-2xl bg-brand-white border border-brand-light p-4 mb-6">
               <div className="flex items-start gap-3 mb-3">
                 <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 shadow-sm">
-                  <Image src="/logo.jpg" alt="ASL Cozy Living" fill className="object-cover" />
+                  <Image src="/logo.png" alt="ASL Cozy Living" fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-gray-900">Hosted by ASL Cozy Living</p>

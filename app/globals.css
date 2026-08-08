@@ -19,7 +19,7 @@
 html, body {
   /* Warm earthy wash — soft ivory → cream → light beige. Blurred flowers layer on top via -z-10 fixed. */
   background: linear-gradient(135deg, #FAF3E6 0%, #F5EAD5 50%, #EDE3D1 100%);
-  color: #6B6257;
+  color: #5B5245;
   overflow-x: hidden;
   min-height: 100vh;
 }
