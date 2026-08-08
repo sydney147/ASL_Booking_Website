@@ -59,8 +59,7 @@ export default function BookingForm({ unit }: Props) {
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   // guests
-  const [guests,       setGuests]      = useState<Guests>({ adults: 1, children: 0, infants: 0, pets: 0 });
-  const [guestsOpen,   setGuestsOpen]  = useState(false);
+  const [guests, setGuests] = useState<Guests>({ adults: 1, children: 0, infants: 0, pets: 0 });
 
   // contact
   const [info, setInfo] = useState({ name: '', email: '', phone: '' });
@@ -217,11 +216,6 @@ export default function BookingForm({ unit }: Props) {
   }
 
   // ── render ──────────────────────────────────────────────────────
-  const guestSummary =
-    totalGuests === 0
-      ? 'Select guests'
-      : `${totalGuests} guest${totalGuests === 1 ? '' : 's'}${guests.infants ? ` · ${guests.infants} infant${guests.infants === 1 ? '' : 's'}` : ''}`;
-
   return (
     <div className="card space-y-3">
 
@@ -322,31 +316,21 @@ export default function BookingForm({ unit }: Props) {
         </div>
       )}
 
-      {/* Guests — expandable */}
-      <div className="border border-brand-light rounded-xl overflow-hidden">
-        <button
-          type="button"
-          onClick={() => setGuestsOpen(v => !v)}
-          className="w-full flex items-center justify-between px-3 py-2 bg-brand-bg hover:bg-brand-light/50 transition-colors"
-        >
-          <div className="text-left">
-            <p className="text-[10px] text-brand-secondary uppercase tracking-wide font-medium">Guests</p>
-            <p className="text-xs font-semibold text-brand-primary">{guestSummary}</p>
-          </div>
-          <svg className={`w-4 h-4 text-gray-500 transition-transform ${guestsOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        {guestsOpen && (
-          <div className="divide-y divide-brand-light animate-[fadeIn_120ms_ease-out]">
-            <GuestCounter label="Adults"   hint="Age 13+"   value={guests.adults}   min={1} max={adultsMax}
-              onChange={n => setGuests(g => ({ ...g, adults: n }))} />
-            <GuestCounter label="Children" hint="Ages 2-12" value={guests.children} max={childrenMax}
-              onChange={n => setGuests(g => ({ ...g, children: n }))} />
-            <GuestCounter label="Infants"  hint="Under 2"   value={guests.infants}  max={infantsMax}
-              onChange={n => setGuests(g => ({ ...g, infants: n }))} />
-          </div>
-        )}
+      {/* Guests — always visible */}
+      <div>
+        <p className="text-[10px] text-brand-secondary uppercase tracking-wide font-medium mb-1.5">Guests</p>
+        <div className="border border-brand-light rounded-xl divide-y divide-brand-light overflow-hidden">
+          <GuestCounter label="Adults"   hint="Age 13+"   value={guests.adults}   min={1} max={adultsMax}
+            onChange={n => setGuests(g => ({ ...g, adults: n }))} />
+          <GuestCounter label="Children" hint="Ages 2-12" value={guests.children} max={childrenMax}
+            onChange={n => setGuests(g => ({ ...g, children: n }))} />
+          <GuestCounter label="Infants"  hint="Under 2"   value={guests.infants}  max={infantsMax}
+            onChange={n => setGuests(g => ({ ...g, infants: n }))} />
+        </div>
+        <p className="text-[10px] text-brand-secondary mt-1.5 leading-relaxed">
+          First 2 guests are complimentary. Up to 3 additional guests allowed for an extra fee
+          (₱{ADULT_EXTRA}/night per adult, ₱{CHILD_EXTRA}/night per child).
+        </p>
       </div>
 
       {/* Payment option */}
