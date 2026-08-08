@@ -36,6 +36,40 @@ export const UNIT_FEATURES: Record<string, UnitFeatures> = {
       { label: 'Near IT Park (Dining & Business)',  icon: 'itpark' },
     ],
   },
+  'room-2521': {
+    room: [
+      { label: 'Comfortable Bed for up to 5',          icon: 'bed' },
+      { label: 'Fully Equipped Kitchen',               icon: 'kitchen' },
+      { label: 'Fridge',                               icon: 'fridge' },
+      { label: 'Smart TV (Netflix) & High Speed WiFi', icon: 'tv' },
+      { label: 'Hot & Cold Shower',                    icon: 'shower' },
+      { label: 'Aircon',                               icon: 'aircon' },
+    ],
+    building: [
+      { label: '24/7 Concierge',         icon: 'concierge' },
+      { label: 'City Lights & Mt. View', icon: 'view' },
+      { label: 'Pool',                   icon: 'pool' },
+      { label: 'Garden',                 icon: 'garden' },
+      { label: 'Near IT Park (Dining & Business)',  icon: 'itpark' },
+    ],
+  },
+  'room-526': {
+    room: [
+      { label: 'Comfortable Bed for up to 5',          icon: 'bed' },
+      { label: 'Fully Equipped Kitchen',               icon: 'kitchen' },
+      { label: 'Fridge',                               icon: 'fridge' },
+      { label: 'Smart TV (Netflix) & High Speed WiFi', icon: 'tv' },
+      { label: 'Hot & Cold Shower',                    icon: 'shower' },
+      { label: 'Aircon',                               icon: 'aircon' },
+    ],
+    building: [
+      { label: '24/7 Concierge',         icon: 'concierge' },
+      { label: 'Low Floor · Fast Elevator', icon: 'view' },
+      { label: 'Pool',                   icon: 'pool' },
+      { label: 'Garden',                 icon: 'garden' },
+      { label: 'Near IT Park (Dining & Business)',  icon: 'itpark' },
+    ],
+  },
 };
 
 export const FEATURE_ICONS: Record<string, string> = {

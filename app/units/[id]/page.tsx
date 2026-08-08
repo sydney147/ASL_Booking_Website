@@ -8,20 +8,44 @@ import { UNIT_FEATURES, FEATURE_ICONS } from '@/lib/features';
 
 const UNIT_IMAGES: Record<string, string[]> = {
   'room-2421': [
-    '/2421/IMG_0954.JPG',
-    '/2421/IMG_0951.JPG',
-    '/2421/IMG_0952.JPG',
-    '/2421/IMG_0897.jpg',
-    '/2421/IMG_0896.jpg',
-    '/2421/IMG_0963.jpg',
+    '/2421/IMG_4358.jpg',
+    '/2421/IMG_4359.jpg',
+    '/2421/IMG_4363.jpg',
+    '/2421/IMG_4365.jpg',
+    '/2421/IMG_4366.jpg',
+    '/2421/IMG_4367.jpg',
+    '/2421/IMG_4368.jpg',
+    '/2421/IMG_4370.jpg',
   ],
   'room-2621': [
-    '/2621/IMG_1120.jpg',
-    '/2621/IMG_1119.jpg',
-    '/2621/IMG_1124.jpg',
-    '/2621/IMG_1127.jpg',
-    '/2621/IMG_1149.jpg',
-    '/2621/IMG_0858.jpg',
+    '/2621/IMG_4322.jpg',
+    '/2621/IMG_4323.jpg',
+    '/2621/IMG_4324.jpg',
+    '/2621/IMG_4325.jpg',
+    '/2621/IMG_4327.jpg',
+    '/2621/IMG_4328.jpg',
+    '/2621/IMG_4329.jpg',
+    '/2621/IMG_4331.jpg',
+  ],
+  'room-2521': [
+    '/2521/IMG_4288.jpg',
+    '/2521/IMG_4289.jpg',
+    '/2521/IMG_4290.jpg',
+    '/2521/IMG_4291.jpg',
+    '/2521/IMG_4292.jpg',
+    '/2521/IMG_4293.jpg',
+    '/2521/IMG_4294.jpg',
+    '/2521/IMG_4295.jpg',
+  ],
+  'room-526': [
+    '/526/att._fJPYgoPF6nBsG4WrStm6G2McqieI64zn1AQimNTqGE.jpg',
+    '/526/att.4_847JBxtSemxKvcUzIx0k5UlxoBgtlmcuC_CZ1KAyM.jpg',
+    '/526/att.78p4i1Qr-EyUyKhl6xXshKjQbA-2gVIUSSq6tpox_Kc.jpg',
+    '/526/att.BZR6MAilYtiyvpuWbPuI9LtGx7E0ARN9Cpgt75cEHlo.jpg',
+    '/526/att.c759aOKi9Bl6a2I6ngo7MusVaPpJxCdpjcrKNojyFpI.jpg',
+    '/526/att.EDYilafKmGT8I7O32KdDniYrJe-Fz00Vypn62Cfzytk.jpg',
+    '/526/att.FtHYs9AHz3mBvNP20vUjaGz9OZC4pGr1qM2oXjjZAeg.jpg',
+    '/526/att.gMAMXnjpJOeDb9Jl7c1QSIAVyqiL9Pm8jjuaFw5Qwlg.jpg',
   ],
 };
 
@@ -35,7 +59,7 @@ export default async function UnitBookingPage({ params }: { params: { id: string
   const features = UNIT_FEATURES[unit.id] ?? { room: [], building: [] };
   const images   = UNIT_IMAGES[unit.id] ?? [];
 
-  const heroImage = unit.id === 'room-2421' ? '/IMG_0954.JPG' : '/IMG_1300.JPG';
+  const heroImage = unit.imageUrl;
 
   return (
     <div>
