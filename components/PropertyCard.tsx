@@ -44,20 +44,18 @@ export default function PropertyCard({ unit, dimmed = false }: Props) {
               Pet-friendly
             </span>
           )}
-          {/* Save button (visual only for now) */}
-          <button
-            type="button"
-            aria-label="Save property"
-            onClick={(e) => { e.preventDefault(); }}
+          {/* Save icon (visual only for now — will be interactive when favorites are wired up) */}
+          <div
+            aria-hidden="true"
             className="absolute top-3 right-3 w-9 h-9 bg-brand-white/95 backdrop-blur-sm
                        rounded-full flex items-center justify-center shadow-sm
-                       hover:scale-110 hover:bg-brand-blush transition-all"
+                       transition-all group-hover:bg-brand-blush"
           >
             <svg className="w-4 h-4 text-gray-400 group-hover:text-brand-secondary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
-          </button>
+          </div>
         </div>
 
         {/* Body */}
