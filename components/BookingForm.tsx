@@ -327,7 +327,7 @@ export default function BookingForm({ unit }: Props) {
           <GuestCounter label="Infants"  hint="Under 2"   value={guests.infants}  max={infantsMax}
             onChange={n => setGuests(g => ({ ...g, infants: n }))} />
         </div>
-        <p className="text-[10px] text-brand-secondary mt-1.5 leading-relaxed">
+        <p className="text-xs text-brand-secondary mt-2 leading-relaxed">
           First 2 guests are complimentary. Up to 3 additional guests allowed for an extra fee
           (₱{ADULT_EXTRA}/night per adult, ₱{CHILD_EXTRA}/night per child).
         </p>

@@ -11,32 +11,32 @@ type Props = {
 
 export default function GuestCounter({ label, hint, value, min = 0, max = 20, onChange }: Props) {
   return (
-    <div className="flex items-center justify-between py-3 sm:py-2">
+    <div className="flex items-center justify-between px-3 py-3 sm:py-2">
       <div>
-        <div className="font-medium text-gray-800 text-sm sm:text-base">{label}</div>
-        {hint && <div className="text-xs text-gray-500">{hint}</div>}
+        <div className="font-medium text-brand-primary text-sm sm:text-base">{label}</div>
+        {hint && <div className="text-xs text-brand-secondary">{hint}</div>}
       </div>
       <div className="flex items-center gap-3 sm:gap-2">
         <button
           type="button"
           onClick={() => onChange(Math.max(min, value - 1))}
           disabled={value <= min}
-          className="w-10 h-10 sm:w-8 sm:h-8 rounded-full border border-gray-300 text-lg leading-none
+          className="w-10 h-10 sm:w-8 sm:h-8 rounded-full border border-brand-light text-lg leading-none
                      flex items-center justify-center
-                     hover:border-brand-primary hover:text-brand-primary
+                     hover:border-brand-accent hover:text-brand-accent
                      disabled:opacity-40 disabled:cursor-not-allowed"
           aria-label={`Decrease ${label}`}
         >
           &minus;
         </button>
-        <span className="w-7 sm:w-6 text-center font-medium">{value}</span>
+        <span className="w-7 sm:w-6 text-center font-medium text-brand-primary">{value}</span>
         <button
           type="button"
           onClick={() => onChange(Math.min(max, value + 1))}
           disabled={value >= max}
-          className="w-10 h-10 sm:w-8 sm:h-8 rounded-full border border-gray-300 text-lg leading-none
+          className="w-10 h-10 sm:w-8 sm:h-8 rounded-full border border-brand-light text-lg leading-none
                      flex items-center justify-center
-                     hover:border-brand-primary hover:text-brand-primary
+                     hover:border-brand-accent hover:text-brand-accent
                      disabled:opacity-40 disabled:cursor-not-allowed"
           aria-label={`Increase ${label}`}
         >
