@@ -1,8 +1,6 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { fetchUnits } from '@/lib/units';
-import { formatPHP } from '@/lib/rates';
-import { UNIT_FEATURES, FEATURE_ICONS } from '@/lib/features';
+import PropertyList from '@/components/PropertyList';
 
 export const dynamic = 'force-dynamic';
 
@@ -73,79 +71,8 @@ export default async function HomePage() {
             <h2 className="font-sans text-3xl font-black text-gray-900">Our Properties</h2>
           </div>
 
-          {/* Property grid — full-width 2-col */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
-            {units.map((unit) => (
-              <Link href={`/units/${unit.id}`} key={unit.id} className="group block w-full min-w-0">
-                <article className="w-full rounded-2xl bg-brand-white border border-brand-light
-                                    overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
-                  {/* Image area */}
-                  <div className="relative h-56 sm:h-72 bg-brand-light/60">
-                    {unit.imageUrl && (
-                      <Image
-                        src={unit.imageUrl}
-                        alt={unit.name}
-                        fill
-                        className="object-cover"
-                      />
-                    )}
-                    <span className="absolute top-4 left-4 bg-brand-white text-brand-primary
-                                     text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-                      Apartment
-                    </span>
-                    <button
-                      aria-label="Save property"
-                      className="absolute top-4 right-4 w-9 h-9 bg-brand-white rounded-full
-                                 flex items-center justify-center shadow-sm hover:scale-110 transition-transform"
-                    >
-                      <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                      </svg>
-                    </button>
-                  </div>
-
-                  <div className="p-4 sm:p-6">
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <h2 className="font-bold text-gray-900 text-base sm:text-lg leading-snug group-hover:text-brand-primary transition-colors min-w-0">
-                        {unit.name}
-                      </h2>
-                      <div className="text-right flex-shrink-0">
-                        <span className="text-brand-primary font-bold text-base sm:text-lg">{formatPHP(unit.standardRate)}</span>
-                        <span className="block text-xs font-normal text-gray-400">/night</span>
-                      </div>
-                    </div>
-
-                    <p className="text-sm text-gray-500 leading-relaxed mb-3 line-clamp-2">
-                      {unit.description}
-                    </p>
-
-                    <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
-                      <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      </svg>
-                      <span className="truncate">{unit.address}</span>
-                    </div>
-
-                    {/* Features */}
-                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-brand-light">
-                      {(UNIT_FEATURES[unit.id]?.room ?? []).slice(0, 4).map((f) => (
-                        <div key={f.label}
-                          className="flex items-center gap-1 bg-brand-bg border border-brand-light
-                                     rounded-full px-2.5 py-1 text-xs text-gray-600 min-w-0 max-w-full">
-                          <svg className="w-3 h-3 text-brand-secondary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={FEATURE_ICONS[f.icon]} />
-                          </svg>
-                          <span className="truncate">{f.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              </Link>
-            ))}
-          </div>
+          {/* Property list — client component with filters + sort */}
+          <PropertyList units={units} />
         </div>
       </section>
     </div>

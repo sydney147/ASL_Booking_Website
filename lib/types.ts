@@ -38,6 +38,7 @@ export type BookingInput = {
   paymentMethod: PaymentMethod;
   paymentOption: PaymentOption;
   proofUrl: string;
+  specialRequests?: string;
 };
 
 export type RateBreakdown = {

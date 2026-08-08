@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { fetchUnit } from '@/lib/units';
+import Link from 'next/link';
+import { fetchUnit, fetchUnits } from '@/lib/units';
 import BookingForm from '@/components/BookingForm';
 import ImageGallery from '@/components/ImageGallery';
+import PropertyCard from '@/components/PropertyCard';
 import { formatPHP } from '@/lib/rates';
 import { UNIT_FEATURES, FEATURE_ICONS } from '@/lib/features';
 
@@ -53,11 +55,12 @@ export const dynamic = 'force-dynamic';
 
 
 export default async function UnitBookingPage({ params }: { params: { id: string } }) {
-  const unit = await fetchUnit(params.id);
+  const [unit, allUnits] = await Promise.all([fetchUnit(params.id), fetchUnits()]);
   if (!unit) notFound();
 
-  const features = UNIT_FEATURES[unit.id] ?? { room: [], building: [] };
-  const images   = UNIT_IMAGES[unit.id] ?? [];
+  const features    = UNIT_FEATURES[unit.id] ?? { room: [], building: [] };
+  const images      = UNIT_IMAGES[unit.id] ?? [];
+  const otherUnits  = allUnits.filter(u => u.id !== unit.id);
 
   const heroImage = unit.imageUrl;
 
@@ -97,10 +100,34 @@ export default async function UnitBookingPage({ params }: { params: { id: string
 
       <div className="max-w-4xl mx-auto px-4 sm:px-8 py-5 sm:py-7">
 
-        {/* Price */}
-        <div className="flex items-baseline gap-1.5 mb-5">
+        {/* Breadcrumb */}
+        <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-4" aria-label="Breadcrumb">
+          <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
+          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+          <span className="text-gray-700 font-medium">{unit.name}</span>
+        </nav>
+
+        {/* Price + quick specs */}
+        <div className="flex items-baseline gap-1.5 mb-1">
           <span className="text-brand-primary font-bold text-2xl">{formatPHP(unit.standardRate)}</span>
           <span className="text-sm text-gray-400">/night</span>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-gray-500 mb-5">
+          <svg className="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <span className="font-semibold text-gray-700">4.9</span>
+          <span>(24 reviews)</span>
+          <span className="text-gray-300">·</span>
+          <span>Up to {unit.maxGuests} guests</span>
+          {unit.petsFriendly && (
+            <>
+              <span className="text-gray-300">·</span>
+              <span>Pet-friendly</span>
+            </>
+          )}
         </div>
 
         <ImageGallery images={images} alt={unit.name} />
@@ -153,6 +180,28 @@ export default async function UnitBookingPage({ params }: { params: { id: string
 
         {/* Booking Form */}
         <BookingForm unit={unit} />
+
+        {/* Explore other units */}
+        {otherUnits.length > 0 && (
+          <div className="mt-12 pt-8 border-t border-brand-light">
+            <div className="flex items-baseline justify-between mb-4">
+              <div>
+                <p className="text-brand-secondary text-xs font-semibold tracking-widest uppercase mb-1">
+                  Also available
+                </p>
+                <h2 className="font-sans text-xl sm:text-2xl font-black text-gray-900">Explore other units</h2>
+              </div>
+              <Link href="/" className="text-xs font-semibold text-brand-primary hover:underline">
+                View all →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {otherUnits.slice(0, 3).map((u) => (
+                <PropertyCard key={u.id} unit={u} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

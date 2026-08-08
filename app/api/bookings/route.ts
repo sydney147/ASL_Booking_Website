@@ -92,6 +92,7 @@ export async function POST(req: NextRequest) {
     reservationFee,
     balanceDue,
     proofUrl: body.proofUrl ?? '',
+    specialRequests: (body.specialRequests ?? '').trim().slice(0, 500),
     status: 'pending' as const,
     createdAt: FieldValue.serverTimestamp(),
   };

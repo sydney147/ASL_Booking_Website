@@ -73,6 +73,7 @@ export default function BookingForm({ unit }: Props) {
 
   // contact
   const [info, setInfo] = useState({ name: '', email: '', phone: '' });
+  const [specialRequests, setSpecialRequests] = useState('');
 
   // payment
   const [payOption,    setPayOption]    = useState<'reservation' | 'full'>('reservation');
@@ -219,6 +220,7 @@ export default function BookingForm({ unit }: Props) {
         unitId: unit.id, unitName: unit.name,
         customer: info, checkIn, checkOut, guests,
         paymentMethod: method, paymentOption: payOption, proofUrl,
+        specialRequests,
       }),
     });
     const data = await res.json();
@@ -270,6 +272,20 @@ export default function BookingForm({ unit }: Props) {
                 value={info.email}
                 onChange={e => setInfo({ ...info, email: e.target.value })}
               />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="label">Special Requests <span className="text-gray-400 normal-case tracking-normal text-[10px] ml-1">(optional)</span></label>
+              <textarea
+                className="field resize-none"
+                rows={3}
+                maxLength={500}
+                placeholder="Any early check-in, late check-out, or accessibility needs? Let the host know."
+                value={specialRequests}
+                onChange={e => setSpecialRequests(e.target.value)}
+              />
+              <p className="text-[10px] text-gray-400 mt-1 text-right">
+                {specialRequests.length}/500
+              </p>
             </div>
           </div>
         </section>
@@ -528,6 +544,18 @@ export default function BookingForm({ unit }: Props) {
               </svg>
               Confirm Booking
             </button>
+
+            {/* Cancellation policy */}
+            <div className="rounded-xl bg-brand-cream/60 border border-brand-light px-3 py-2.5 text-[11px] text-gray-600 leading-relaxed">
+              <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5 text-brand-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Cancellation policy
+              </p>
+              <p>Free cancellation up to 48 hours before check-in. Cancellations within 48 hours forfeit the reservation fee. No refund after check-in.</p>
+            </div>
           </div>
         </div>
       </aside>
