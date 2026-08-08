@@ -5,42 +5,49 @@ import { useRouter } from 'next/navigation';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { auth, db, firebaseConfigured } from '@/lib/firebase';
-import { formatPHP } from '@/lib/rates';
 import { useAuth } from '@/lib/useAuth';
 import { fetchUnits } from '@/lib/units';
-import { Unit } from '@/lib/types';
+import { BlockedRange, Unit } from '@/lib/types';
 import AdminUnitSection, { AdminBooking } from '@/components/AdminUnitSection';
 import PendingPanel from '@/components/PendingPanel';
+import AdminStats from '@/components/AdminStats';
 
 export default function AdminPage() {
   const router = useRouter();
   const { user, isAdmin, loading: authLoading, error: authError } = useAuth();
 
-  const [units,      setUnits]      = useState<Unit[]>([]);
-  const [bookings,   setBookings]   = useState<AdminBooking[]>([]);
-  const [loading,    setLoading]    = useState(true);
-  const [error,      setError]      = useState<string | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [units,         setUnits]         = useState<Unit[]>([]);
+  const [bookings,      setBookings]      = useState<AdminBooking[]>([]);
+  const [blockedRanges, setBlockedRanges] = useState<BlockedRange[]>([]);
+  const [loading,       setLoading]       = useState(true);
+  const [error,         setError]         = useState<string | null>(null);
+  const [previewUrl,    setPreviewUrl]    = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    if (!firebaseConfigured) {
+    if (!firebaseConfigured || !user) {
       setError('Firebase is not configured. Add .env.local to read bookings.');
       setLoading(false);
       return;
     }
     try {
-      const [unitsData, snap] = await Promise.all([
+      const token = await user.getIdToken();
+      const [unitsData, snap, blockedRes] = await Promise.all([
         fetchUnits(),
         getDocs(query(collection(db(), 'bookings'), orderBy('createdAt', 'desc'))),
+        fetch('/api/admin/blocked-dates', { headers: { Authorization: `Bearer ${token}` } }),
       ]);
       setUnits(unitsData);
       setBookings(snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<AdminBooking, 'id'>) })));
+      if (blockedRes.ok) {
+        const blockedData = await blockedRes.json();
+        setBlockedRanges(blockedData.ranges ?? []);
+      }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to load bookings.');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (authLoading) return;
@@ -75,12 +82,43 @@ export default function AdminPage() {
     }
   }
 
+  async function addBlock(unitId: string, unitName: string, startDate: string, endDate: string, reason: string) {
+    if (!user) throw new Error('Not signed in.');
+    const token = await user.getIdToken();
+    const res = await fetch('/api/admin/blocked-dates', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ unitId, unitName, startDate, endDate, reason }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error ?? 'Could not add block.');
+    setBlockedRanges((rs) => [...rs, data as BlockedRange]);
+  }
+
+  async function removeBlock(id: string) {
+    if (!user) return;
+    const previous = blockedRanges;
+    setBlockedRanges((rs) => rs.filter(r => r.id !== id));
+    try {
+      const token = await user.getIdToken();
+      const res = await fetch(`/api/admin/blocked-dates/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error((await res.json()).error ?? 'Could not remove block.');
+    } catch (err) {
+      console.error('removeBlock failed:', err);
+      setBlockedRanges(previous);
+      setError(err instanceof Error ? err.message : 'Could not remove block.');
+    }
+  }
+
   async function handleSignOut() {
     await signOut(auth());
     router.replace('/admin/login');
   }
 
-  // Group bookings by unit
+  // Group bookings and blocked ranges by unit
   const bookingsByUnit = useMemo(() => {
     const map = new Map<string, AdminBooking[]>();
     units.forEach(u => map.set(u.id, []));
@@ -92,12 +130,15 @@ export default function AdminPage() {
     return map;
   }, [bookings, units]);
 
-  // Overall stats (across all units)
-  const totalStats = useMemo(() => ({
-    total:     bookings.length,
-    confirmed: bookings.filter(b => b.status === 'confirmed').length,
-    revenue:   bookings.filter(b => b.status === 'confirmed').reduce((s, b) => s + b.totalAmount, 0),
-  }), [bookings]);
+  const blockedByUnit = useMemo(() => {
+    const map = new Map<string, BlockedRange[]>();
+    units.forEach(u => map.set(u.id, []));
+    blockedRanges.forEach(r => {
+      if (!map.has(r.unitId)) map.set(r.unitId, []);
+      map.get(r.unitId)!.push(r);
+    });
+    return map;
+  }, [blockedRanges, units]);
 
   const pendingBookings = useMemo(
     () => bookings.filter(b => b.status === 'pending'),
@@ -106,7 +147,7 @@ export default function AdminPage() {
 
   // ── Auth guards ──────────────────────────────────────────────────
   if (authLoading) {
-    return <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8"><p className="text-gray-500">Checking access…</p></div>;
+    return <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8"><p className="text-brand-secondary">Checking access…</p></div>;
   }
   if (authError) {
     return (
@@ -120,7 +161,7 @@ export default function AdminPage() {
     return (
       <div className="max-w-md mx-auto px-4 sm:px-8 py-12">
         <h1 className="font-display text-3xl text-brand-primary mb-2">Not Authorized</h1>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm text-brand-secondary mb-4">
           You&apos;re signed in as <span className="font-mono">{user.email}</span>, but this account
           doesn&apos;t have admin access.
         </p>
@@ -136,28 +177,19 @@ export default function AdminPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-display text-2xl sm:text-3xl text-brand-primary mb-0.5">Bookings Dashboard</h1>
-          <p className="text-xs text-gray-400">Signed in as <span className="font-mono">{user.email}</span></p>
+          <h1 className="font-display text-2xl sm:text-3xl text-brand-primary mb-0.5">Admin Dashboard</h1>
+          <p className="text-xs text-brand-secondary">Signed in as <span className="font-mono">{user.email}</span></p>
         </div>
         <button onClick={handleSignOut} className="btn-outline text-sm px-4 py-2">Sign out</button>
       </div>
 
-      {/* Overall stats strip — three quiet cards */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
-        {[
-          { label: 'Total',     value: totalStats.total },
-          { label: 'Confirmed', value: totalStats.confirmed },
-          { label: 'Revenue',   value: formatPHP(totalStats.revenue) },
-        ].map(s => (
-          <div key={s.label} className="rounded-2xl border border-brand-light bg-brand-bg/40 px-4 py-3">
-            <p className="text-[10px] font-medium uppercase tracking-wide text-gray-400 mb-0.5">{s.label}</p>
-            <p className="text-lg sm:text-xl font-bold text-brand-primary">{s.value}</p>
-          </div>
-        ))}
-      </div>
-
-      {loading && <p className="text-gray-500 mb-4">Loading…</p>}
+      {loading && <p className="text-brand-secondary mb-4">Loading…</p>}
       {error   && <div className="rounded-lg bg-red-50 text-red-700 text-sm px-3 py-2 mb-4">{error}</div>}
+
+      {/* Stats + charts overview */}
+      {!loading && !error && (
+        <AdminStats bookings={bookings} units={units} />
+      )}
 
       {/* Bookings that need confirm/cancel decisions */}
       {!loading && !error && (
@@ -174,8 +206,11 @@ export default function AdminPage() {
           key={unit.id}
           unit={unit}
           bookings={bookingsByUnit.get(unit.id) ?? []}
+          blockedRanges={blockedByUnit.get(unit.id) ?? []}
           onSetStatus={setStatus}
           onPreviewProof={setPreviewUrl}
+          onAddBlock={addBlock}
+          onRemoveBlock={removeBlock}
         />
       ))}
 

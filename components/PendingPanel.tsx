@@ -46,7 +46,7 @@ export default function PendingPanel({ bookings, onSetStatus, onPreviewProof }: 
             return (
               <div
                 key={b.id}
-                className="rounded-xl bg-white border border-amber-100 p-3 sm:p-4 flex gap-3"
+                className="rounded-xl bg-brand-white border border-amber-100 p-3 sm:p-4 flex gap-3"
               >
                 {/* Proof thumbnail */}
                 {b.proofUrl ? (
@@ -64,7 +64,7 @@ export default function PendingPanel({ bookings, onSetStatus, onPreviewProof }: 
                     className="w-14 flex-shrink-0 rounded-lg bg-brand-bg border border-dashed border-brand-light flex items-center justify-center self-start"
                     style={{ aspectRatio: '9/16' }}
                   >
-                    <span className="text-[9px] text-gray-400 text-center leading-tight px-1">No proof</span>
+                    <span className="text-[9px] text-brand-secondary text-center leading-tight px-1">No proof</span>
                   </div>
                 )}
 
@@ -73,7 +73,7 @@ export default function PendingPanel({ bookings, onSetStatus, onPreviewProof }: 
                   <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="font-semibold text-gray-900 text-sm leading-tight truncate">{b.customer.name}</p>
+                        <p className="font-semibold text-brand-primary text-sm leading-tight truncate">{b.customer.name}</p>
                         {fresh && (
                           <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded bg-amber-500 text-white">
                             New
@@ -87,7 +87,7 @@ export default function PendingPanel({ bookings, onSetStatus, onPreviewProof }: 
                     </span>
                   </div>
 
-                  <div className="text-xs text-gray-500 mb-2">
+                  <div className="text-xs text-brand-secondary mb-2">
                     <span className="inline-flex items-center gap-1">
                       <svg className="w-3 h-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -95,9 +95,9 @@ export default function PendingPanel({ bookings, onSetStatus, onPreviewProof }: 
                       </svg>
                       {b.checkIn} → {b.checkOut}
                     </span>
-                    <span className="mx-2 text-gray-300">•</span>
+                    <span className="mx-2 text-brand-light">•</span>
                     <span>{b.customer.email}</span>
-                    <span className="mx-2 text-gray-300">•</span>
+                    <span className="mx-2 text-brand-light">•</span>
                     <span>{b.customer.phone}</span>
                   </div>
 

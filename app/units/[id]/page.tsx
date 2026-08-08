@@ -6,7 +6,6 @@ import BookingForm from '@/components/BookingForm';
 import ImageGallery from '@/components/ImageGallery';
 import PropertyCard from '@/components/PropertyCard';
 import DescriptionText from '@/components/DescriptionText';
-import ReviewsStrip from '@/components/ReviewsStrip';
 import { UNIT_FEATURES, FEATURE_ICONS } from '@/lib/features';
 
 const UNIT_IMAGES: Record<string, string[]> = {
@@ -109,16 +108,13 @@ export default async function UnitBookingPage({ params }: { params: { id: string
           <span className="text-gray-700 font-medium">{unit.name}</span>
         </nav>
 
-        {/* Rating + quick specs strip */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-600 mb-4">
-          <div className="flex items-center gap-1">
-            <svg className="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <span className="font-semibold text-gray-800">4.9</span>
-            <span className="text-brand-secondary">(24 reviews)</span>
-          </div>
-          <span className="text-gray-300">·</span>
+        {/* Quick address line */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-brand-secondary mb-4">
+          <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
           <span>{unit.address}</span>
         </div>
 
@@ -198,8 +194,6 @@ export default async function UnitBookingPage({ params }: { params: { id: string
               </div>
             </div>
 
-            {/* Reviews */}
-            <ReviewsStrip />
           </div>
 
           {/* RIGHT — sticky booking widget */}

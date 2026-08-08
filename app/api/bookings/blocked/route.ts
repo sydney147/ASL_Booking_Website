@@ -10,15 +10,22 @@ export async function GET(req: NextRequest) {
   if (!firebaseConfigured) return NextResponse.json({ ranges: [] });
 
   try {
-    const snap = await adminDb()
-      .collection('bookings')
-      .where('unitId', '==', unitId)
-      .get();
-    const ranges = snap.docs
+    const [bookingsSnap, blocksSnap] = await Promise.all([
+      adminDb().collection('bookings').where('unitId', '==', unitId).get(),
+      adminDb().collection('blockedRanges').where('unitId', '==', unitId).get(),
+    ]);
+
+    const bookingRanges = bookingsSnap.docs
       .map(d => d.data())
       .filter(d => d.status === 'confirmed' || d.status === 'done')
       .map(d => ({ checkIn: d.checkIn as string, checkOut: d.checkOut as string }));
-    return NextResponse.json({ ranges });
+
+    // Manually blocked ranges (e.g. booked directly on Airbnb) count as unavailable too.
+    const manualRanges = blocksSnap.docs
+      .map(d => d.data())
+      .map(d => ({ checkIn: d.startDate as string, checkOut: d.endDate as string }));
+
+    return NextResponse.json({ ranges: [...bookingRanges, ...manualRanges] });
   } catch (err) {
     console.error('blocked-dates query failed:', err);
     return NextResponse.json({ ranges: [] });

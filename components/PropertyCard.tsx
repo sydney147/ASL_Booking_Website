@@ -6,11 +6,6 @@ import { UNIT_FEATURES, FEATURE_ICONS } from '@/lib/features';
 
 type Props = { unit: Unit; dimmed?: boolean };
 
-// A single, static rating value we show on every card for now.
-// If you later add real reviews, wire this up to the aggregated average.
-const MOCK_RATING = 4.9;
-const MOCK_REVIEW_COUNT = 24;
-
 export default function PropertyCard({ unit, dimmed = false }: Props) {
   const features = UNIT_FEATURES[unit.id]?.room?.slice(0, 3) ?? [];
 
@@ -37,13 +32,6 @@ export default function PropertyCard({ unit, dimmed = false }: Props) {
                            text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">
             Studio
           </span>
-          {/* Pet-friendly badge */}
-          {unit.petsFriendly && (
-            <span className="absolute top-3 left-24 bg-brand-cream text-brand-primary
-                             text-xs font-medium px-2.5 py-1 rounded-full shadow-sm border border-brand-light">
-              Pet-friendly
-            </span>
-          )}
           {/* Save icon (visual only for now — will be interactive when favorites are wired up) */}
           <div
             aria-hidden="true"
@@ -71,23 +59,13 @@ export default function PropertyCard({ unit, dimmed = false }: Props) {
             </div>
           </div>
 
-          {/* Rating + location line */}
-          <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
-            <div className="flex items-center gap-1">
-              <svg className="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span className="font-semibold text-gray-700">{MOCK_RATING}</span>
-              <span className="text-brand-secondary">({MOCK_REVIEW_COUNT})</span>
-            </div>
-            <span className="text-gray-300">·</span>
-            <div className="flex items-center gap-1 min-w-0 flex-1">
-              <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              </svg>
-              <span className="truncate">I.T. Park, Cebu</span>
-            </div>
+          {/* Location line */}
+          <div className="flex items-center gap-1 text-xs text-gray-500 mb-3 min-w-0">
+            <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            </svg>
+            <span className="truncate">I.T. Park, Cebu</span>
           </div>
 
           {/* Meta line: max guests + short specs */}

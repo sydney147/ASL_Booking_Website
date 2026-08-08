@@ -9,7 +9,6 @@ export type Unit = {
   cleaningFee: number;
   maxGuests: number;
   extraGuestRate: number;
-  petsFriendly: boolean;
 };
 
 export type Guests = {
@@ -49,6 +48,19 @@ export type RateBreakdown = {
   totalAmount: number;
 };
 
+// A manually blocked date range for a unit — e.g. because it's booked on
+// Airbnb directly rather than through this site. Not tied to a real booking.
+export type BlockedRange = {
+  id: string;
+  unitId: string;
+  unitName: string;
+  startDate: string;   // YYYY-MM-DD, inclusive
+  endDate: string;      // YYYY-MM-DD, exclusive (same convention as checkOut)
+  reason: string;
+  createdAt?: string | null;
+  createdBy?: string;
+};
+
 export const DEFAULT_UNITS: Unit[] = [
   {
     id: 'room-2421',
@@ -61,7 +73,6 @@ export const DEFAULT_UNITS: Unit[] = [
     cleaningFee: 400,
     maxGuests: 3,
     extraGuestRate: 400,
-    petsFriendly: false,
   },
   {
     id: 'room-2621',
@@ -74,7 +85,6 @@ export const DEFAULT_UNITS: Unit[] = [
     cleaningFee: 500,
     maxGuests: 4,
     extraGuestRate: 500,
-    petsFriendly: true,
   },
   {
     id: 'room-2521',
@@ -87,7 +97,6 @@ export const DEFAULT_UNITS: Unit[] = [
     cleaningFee: 400,
     maxGuests: 5,
     extraGuestRate: 350,
-    petsFriendly: false,
   },
   {
     id: 'room-526',
@@ -100,7 +109,6 @@ export const DEFAULT_UNITS: Unit[] = [
     cleaningFee: 400,
     maxGuests: 5,
     extraGuestRate: 350,
-    petsFriendly: false,
   },
 ];
 

@@ -43,9 +43,6 @@ export async function POST(req: NextRequest) {
   const rates = calculateRates(unit, body.checkIn, body.checkOut, body.guests);
   if (rates.nights < 1) return badRequest('Invalid date range.');
 
-  if (!unit.petsFriendly && (body.guests.pets ?? 0) > 0)
-    return badRequest('This unit does not allow pets.');
-
   if (!firebaseConfigured) {
     return NextResponse.json(
       {
