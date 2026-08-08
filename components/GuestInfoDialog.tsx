@@ -70,7 +70,7 @@ export default function GuestInfoDialog({ open, initial, onCancel, onContinue }:
             Your details
           </span>
           <div className="flex-1 h-0.5 bg-brand-light" />
-          <span className="flex items-center gap-1 text-gray-400">
+          <span className="flex items-center gap-1 text-brand-secondary">
             <span className="w-5 h-5 rounded-full bg-brand-light text-gray-500 flex items-center justify-center text-[10px]">2</span>
             Payment
           </span>
@@ -115,7 +115,7 @@ export default function GuestInfoDialog({ open, initial, onCancel, onContinue }:
             />
           </div>
           <div>
-            <label className="label">Special Requests <span className="text-gray-400 normal-case tracking-normal text-[10px] ml-1">(optional)</span></label>
+            <label className="label">Special Requests <span className="text-brand-secondary normal-case tracking-normal text-[10px] ml-1">(optional)</span></label>
             <textarea
               className="field resize-none"
               rows={2}

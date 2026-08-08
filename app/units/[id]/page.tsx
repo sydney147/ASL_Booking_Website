@@ -101,7 +101,7 @@ export default async function UnitBookingPage({ params }: { params: { id: string
       <div className="max-w-6xl mx-auto px-4 sm:px-8 py-5 sm:py-7">
 
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-4" aria-label="Breadcrumb">
+        <nav className="flex items-center gap-1.5 text-xs text-brand-secondary mb-4" aria-label="Breadcrumb">
           <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -116,7 +116,7 @@ export default async function UnitBookingPage({ params }: { params: { id: string
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
             <span className="font-semibold text-gray-800">4.9</span>
-            <span className="text-gray-400">(24 reviews)</span>
+            <span className="text-brand-secondary">(24 reviews)</span>
           </div>
           <span className="text-gray-300">·</span>
           <span>{unit.address}</span>
@@ -192,9 +192,9 @@ export default async function UnitBookingPage({ params }: { params: { id: string
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2 pt-3 border-t border-brand-light text-xs">
-                <div><p className="text-gray-400 text-[10px] uppercase tracking-wide">Response</p><p className="font-semibold text-gray-700">98%</p></div>
-                <div><p className="text-gray-400 text-[10px] uppercase tracking-wide">Speaks</p><p className="font-semibold text-gray-700">English · Filipino</p></div>
-                <div><p className="text-gray-400 text-[10px] uppercase tracking-wide">Location</p><p className="font-semibold text-gray-700">Cebu, PH</p></div>
+                <div><p className="text-brand-secondary text-[10px] uppercase tracking-wide">Response</p><p className="font-semibold text-gray-700">98%</p></div>
+                <div><p className="text-brand-secondary text-[10px] uppercase tracking-wide">Speaks</p><p className="font-semibold text-gray-700">English · Filipino</p></div>
+                <div><p className="text-brand-secondary text-[10px] uppercase tracking-wide">Location</p><p className="font-semibold text-gray-700">Cebu, PH</p></div>
               </div>
             </div>
 

@@ -126,7 +126,7 @@ function BookingCard({ b }: { b: LookupBooking }) {
       {/* Status header */}
       <div className="flex items-center justify-between pb-4 mb-4 border-b border-brand-light">
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide">Status</p>
+          <p className="text-xs text-brand-secondary uppercase tracking-wide">Status</p>
           <p className={`text-lg font-bold capitalize ${
             b.status === 'confirmed' ? 'text-green-600'
             : b.status === 'cancelled' ? 'text-gray-500'
@@ -137,7 +137,7 @@ function BookingCard({ b }: { b: LookupBooking }) {
             {b.status}
           </p>
         </div>
-        <p className="text-xs font-mono text-gray-400">{b.id}</p>
+        <p className="text-xs font-mono text-brand-secondary">{b.id}</p>
       </div>
 
       {/* Status message */}
@@ -146,46 +146,46 @@ function BookingCard({ b }: { b: LookupBooking }) {
       {/* Booking details */}
       <div className="grid grid-cols-2 gap-3 mt-4 text-sm">
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide">Unit</p>
+          <p className="text-xs text-brand-secondary uppercase tracking-wide">Unit</p>
           <p className="font-semibold text-gray-800">{b.unitName}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide">Guest</p>
+          <p className="text-xs text-brand-secondary uppercase tracking-wide">Guest</p>
           <p className="font-semibold text-gray-800">{b.customer.name}</p>
         </div>
         {b.unitLocation && (
           <div className="col-span-2">
-            <p className="text-xs text-gray-400 uppercase tracking-wide">Location</p>
+            <p className="text-xs text-brand-secondary uppercase tracking-wide">Location</p>
             <p className="font-semibold text-gray-800">{b.unitLocation}</p>
           </div>
         )}
         {b.unitAddress && (
           <div className="col-span-2">
-            <p className="text-xs text-gray-400 uppercase tracking-wide">Address</p>
+            <p className="text-xs text-brand-secondary uppercase tracking-wide">Address</p>
             <p className="font-semibold text-gray-800">{b.unitAddress}</p>
           </div>
         )}
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide">Check-in</p>
+          <p className="text-xs text-brand-secondary uppercase tracking-wide">Check-in</p>
           <p className="font-semibold text-gray-800">{b.checkIn} · 2:00 PM</p>
         </div>
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide">Check-out</p>
+          <p className="text-xs text-brand-secondary uppercase tracking-wide">Check-out</p>
           <p className="font-semibold text-gray-800">{b.checkOut} · 12:00 Noon</p>
         </div>
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide">Nights</p>
+          <p className="text-xs text-brand-secondary uppercase tracking-wide">Nights</p>
           <p className="font-semibold text-gray-800">{b.nights}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide">Total</p>
+          <p className="text-xs text-brand-secondary uppercase tracking-wide">Total</p>
           <p className="font-semibold text-gray-800">{formatPHP(b.totalAmount)}</p>
         </div>
       </div>
 
       {/* Payment block */}
       <div className="mt-5 pt-4 border-t border-brand-light">
-        <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Payment</p>
+        <p className="text-xs text-brand-secondary uppercase tracking-wide mb-2">Payment</p>
         {isPartial ? (
           <div className="rounded-xl bg-amber-50 border border-amber-100 p-3 text-sm">
             <div className="flex justify-between mb-1">
@@ -254,7 +254,7 @@ function StatusMessage({ status }: { status: LookupBooking['status'] }) {
 
 export default function MyBookingPage() {
   return (
-    <Suspense fallback={<div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 text-gray-400 text-sm">Loading...</div>}>
+    <Suspense fallback={<div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 text-brand-secondary text-sm">Loading...</div>}>
       <MyBookingInner />
     </Suspense>
   );

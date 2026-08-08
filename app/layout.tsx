@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className="font-display text-base sm:text-2xl text-brand-primary tracking-tight whitespace-nowrap">
               ASL Cozy Living
             </Link>
-            <nav className="flex items-center gap-3 sm:gap-7 text-xs sm:text-sm font-medium text-gray-400 whitespace-nowrap">
+            <nav className="flex items-center gap-3 sm:gap-7 text-xs sm:text-sm font-medium text-brand-secondary whitespace-nowrap">
               <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
               <Link href="/my-booking" className="hover:text-brand-primary transition-colors">
                 <span className="sm:hidden">Booking</span>

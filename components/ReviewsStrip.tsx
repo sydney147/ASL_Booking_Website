@@ -60,7 +60,7 @@ export default function ReviewsStrip() {
             </p>
             <div className="text-xs">
               <p className="font-semibold text-gray-900">{r.name}</p>
-              <p className="text-gray-400">{r.date}</p>
+              <p className="text-brand-secondary">{r.date}</p>
             </div>
           </div>
         ))}

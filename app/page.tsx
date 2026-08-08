@@ -49,7 +49,7 @@ export default async function HomePage() {
                 {/* floating badge — inside the image */}
                 <div className="absolute bottom-4 left-4 bg-brand-white/90 backdrop-blur-sm
                                 rounded-2xl px-4 py-2.5 shadow-md border border-brand-light">
-                  <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wide">Available now</p>
+                  <p className="text-[10px] text-brand-secondary font-medium uppercase tracking-wide">Available now</p>
                   <p className="text-sm font-bold text-brand-primary">{units.length} Properties listed</p>
                 </div>
               </div>

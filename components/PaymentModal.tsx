@@ -154,7 +154,7 @@ export default function PaymentModal({ open, totalAmount, onCancel, onSubmit }: 
                     className="object-contain"
                   />
                 </button>
-                <p className="text-xs text-gray-400">Tap QR to enlarge</p>
+                <p className="text-xs text-brand-secondary">Tap QR to enlarge</p>
                 <p className="text-xs text-gray-600">
                   GCash: <span className="font-semibold text-brand-primary">0915 975 7367</span>
                 </p>
@@ -182,7 +182,7 @@ export default function PaymentModal({ open, totalAmount, onCancel, onSubmit }: 
                     className="object-contain"
                   />
                 </button>
-                <p className="text-xs text-gray-400">Tap QR to enlarge</p>
+                <p className="text-xs text-brand-secondary">Tap QR to enlarge</p>
                 <a
                   href={selectedBank.qr}
                   download={`${selectedBank.label}_QR.jpg`}
@@ -192,7 +192,7 @@ export default function PaymentModal({ open, totalAmount, onCancel, onSubmit }: 
                 </a>
               </>
             ) : (
-              <p className="text-sm text-gray-400 text-center">Select a bank to view its QR code</p>
+              <p className="text-sm text-brand-secondary text-center">Select a bank to view its QR code</p>
             )}
           </div>
         </div>

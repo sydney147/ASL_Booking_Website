@@ -51,7 +51,7 @@ export default function PropertyCard({ unit, dimmed = false }: Props) {
                        rounded-full flex items-center justify-center shadow-sm
                        transition-all group-hover:bg-brand-blush"
           >
-            <svg className="w-4 h-4 text-gray-400 group-hover:text-brand-secondary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 text-brand-secondary group-hover:text-brand-secondary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
@@ -67,7 +67,7 @@ export default function PropertyCard({ unit, dimmed = false }: Props) {
             </h2>
             <div className="text-right flex-shrink-0">
               <span className="text-brand-primary font-bold text-base sm:text-lg">{formatPHP(unit.standardRate)}</span>
-              <span className="block text-[10px] font-normal text-gray-400 -mt-0.5">/night</span>
+              <span className="block text-[10px] font-normal text-brand-secondary -mt-0.5">/night</span>
             </div>
           </div>
 
@@ -78,7 +78,7 @@ export default function PropertyCard({ unit, dimmed = false }: Props) {
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
               <span className="font-semibold text-gray-700">{MOCK_RATING}</span>
-              <span className="text-gray-400">({MOCK_REVIEW_COUNT})</span>
+              <span className="text-brand-secondary">({MOCK_REVIEW_COUNT})</span>
             </div>
             <span className="text-gray-300">·</span>
             <div className="flex items-center gap-1 min-w-0 flex-1">
@@ -119,7 +119,7 @@ export default function PropertyCard({ unit, dimmed = false }: Props) {
 
           {/* CTA */}
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Free cancellation · Instant confirm</span>
+            <span className="text-xs text-brand-secondary">Free cancellation · Instant confirm</span>
             <span className="inline-flex items-center gap-1 text-sm font-semibold text-brand-primary
                              group-hover:gap-2 transition-all">
               Book here

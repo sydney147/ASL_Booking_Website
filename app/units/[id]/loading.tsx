@@ -1,6 +1,6 @@
-// Brand palette: brand-light #d6e0e7 → brand-secondary #587d89 → brand-primary #41224A.
+// Earthy palette: light beige → sandstone → terracotta → deep clay → dark cocoa.
 // Five-stop gradient so the wave fades from soft to deep, left to right.
-const DOT_COLORS = ['#d6e0e7', '#a8b9c3', '#587d89', '#4d4868', '#41224A'];
+const DOT_COLORS = ['#EDE3D1', '#D7C7AE', '#C97B63', '#A85E46', '#5B4A3B'];
 
 export default function UnitLoading() {
   return (
