@@ -17,8 +17,8 @@
 }
 
 html, body {
-  /* Very soft pink → lavender wash. Sits behind the blurred flower decoration. */
-  background: linear-gradient(135deg, #FDF5F8 0%, #F7F0FA 100%);
+  /* Warmer pink→lavender→peach wash. Blurred flowers layer on top via -z-10 fixed. */
+  background: linear-gradient(135deg, #FBE5EE 0%, #F1E5FB 50%, #FCEDDD 100%);
   color: #1f1f1f;
   overflow-x: hidden;
   min-height: 100vh;
